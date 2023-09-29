@@ -12,7 +12,7 @@ exports.getAll = async (req, res) => {
 
 exports.getById = async (req, res) => {
   try {
-    const ad = await Ad.findOne(req.params.id).populate("user");
+    const ad = await Ad.findById(req.params.id).populate("user");
     if (!ad) res.status(500).json({ message: "Not Found" });
     else res.json(ad);
   } catch (err) {
@@ -60,7 +60,7 @@ exports.editAd = async (req, res) => {
     const fileType = req.file ? await getImageFileType(req.file) : "unknown";
     if (title && content && date && price && loc && user) {
       const ad = await Ad.findById(req.params.id);
-      if (Ad) {
+      if (ad) {
         if (
           req.file &&
           ["image/png", "image/jpeg", "image/gif"].includes(fileType)

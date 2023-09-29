@@ -6,10 +6,10 @@ const imageUpload = require("../utils/imageUpload");
 
 router.get("/ads", AdController.getAll);
 
-router.get("/ads:id", AdController.getById);
+router.get("/ads/:id", AdController.getById);
 
 router.post(
-  "/ads/",
+  "/ads/:id",
   authMiddleware,
   imageUpload.single("photo"),
   AdController.addAd

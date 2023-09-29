@@ -48,6 +48,8 @@ app.use(
   session({
     secret: process.env.SESSION_SECRET,
     store: MongoStore.create(mongoose.connection),
+    resave: false,
+    saveUninitialized: false,
     cookie: {
       secure: process.env.NODE_ENV == "production",
     },
@@ -63,9 +65,9 @@ app.use("/api", adsRoutes);
 app.use(express.static(path.join(__dirname, "client/build")));
 app.use(express.static(path.join(__dirname, "/public")));
 
-app.get("*", (req, res) => {
-  res.sendFile(path.join(__dirname, "/client/build/index.html"));
-});
+// app.get("*", (req, res) => {
+//   res.sendFile(path.join(__dirname, "/client/build/index.html"));
+// });
 
 app.use((req, res) => {
   res.status(404).json({ message: "Not found..." });

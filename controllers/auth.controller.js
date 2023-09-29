@@ -73,8 +73,8 @@ exports.login = async (req, res) => {
 
 exports.getUser = async (req, res) => {
   try {
-    if (req.session) {
-      res.json({ message: req.session.login });
+    if (req.session.user) {
+      res.json({ message: req.session.user.login });
     } else res.status(404).send({ message: "no session" });
   } catch (err) {
     res.status(500).send({ message: err });
@@ -82,5 +82,11 @@ exports.getUser = async (req, res) => {
 };
 
 exports.logout = async (req, res) => {
-  req.session.destroy;
-};
+  try{
+      req.session.destroy();
+      res.status(200).send({message: 'Logout successful'})
+   } catch(err) {
+    res.status(500).send({message: err})
+   }
+  
+}
