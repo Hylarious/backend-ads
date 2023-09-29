@@ -9,7 +9,7 @@ router.get("/ads", AdController.getAll);
 router.get("/ads/:id", AdController.getById);
 
 router.post(
-  "/ads/:id",
+  "/ads",
   authMiddleware,
   imageUpload.single("photo"),
   AdController.addAd
