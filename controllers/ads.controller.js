@@ -44,7 +44,7 @@ exports.addAd = async (req, res) => {
         user,
       });
       await newAd.save();
-      res.json({ message: "OK!" });
+      res.json(newAd);
     } else {
       fs.unlinkSync(req.file.path);
       res.status(400).send({ message: "Bad request" });
