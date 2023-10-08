@@ -11,16 +11,17 @@ const Register = () => {
   const handleSubmit = (e) => {
     e.preventDefault();
 
-    const fd = FormData();
+    const fd = new FormData();
     fd.append("login", login);
     fd.append("password", password);
     fd.append("tel", tel);
     fd.append("avatar", avatar);
     const options = {
       method: "POST",
-      body: FormData,
+      body: fd,
     };
     fetch(`${API_URL}/auth/register`, options)
+  
       .then((res) => {
         if (res.status === 201) {
           setStatus("success");
@@ -101,7 +102,7 @@ const Register = () => {
           placeholder="Phone Number"
         />
       </Form.Group>
-      <Form.Group className="mb3" controlId="formPhoneNumber">
+      <Form.Group className="mb3" controlId="formAvatar">
         <Form.Label>Avatar</Form.Label>
         <Form.Control
           type="file"

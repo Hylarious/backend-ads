@@ -17,7 +17,7 @@ import NotFound from "./components/pages/NotFound/NotFound";
 
 function App() {
   const dispatch = useDispatch();
-  useEffect(() =>  dispatch(loadAdsRequest()), [dispatch]);
+  useEffect(() => { dispatch(loadAdsRequest())}, [dispatch]);
 
   return (
     <MainLayout>

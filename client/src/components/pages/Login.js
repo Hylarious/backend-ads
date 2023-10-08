@@ -12,6 +12,7 @@ const Login = () => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
+    console.log(JSON.stringify({ login, password }))
     const options = {
       method: "POST",
       headers: {

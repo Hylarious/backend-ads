@@ -1,4 +1,4 @@
-import { useDispatch, useSelector } from "react-redux";
+import { useSelector } from "react-redux";
 import { NavLink, useParams } from "react-router-dom";
 import { getAdById } from "../../../redux/adsRedux";
 import { Button, Spinner } from "react-bootstrap";
@@ -23,12 +23,14 @@ const Ad = () => {
             <img
               className={styles.avatar}
               src={`${IMGS_URL}/${adData.user.avatar}`}
+              alt=""
             ></img>
           </div>
           <div>
             <img
               className={styles.img}
               src={`${IMGS_URL}/${adData.photo}`}
+              alt=""
             ></img>
           </div>
           <div>
