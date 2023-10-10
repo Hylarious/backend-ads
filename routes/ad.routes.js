@@ -10,19 +10,21 @@ router.get("/ads/:id", AdController.getById);
 
 router.post(
   "/ads",
-  authMiddleware,
+  // authMiddleware,
   imageUpload.single("photo"),
   AdController.addAd
 );
 
 router.put(
   "/ads/:id",
-  authMiddleware,
+  // authMiddleware,
   imageUpload.single("photo"),
   AdController.editAd
 );
 
-router.delete("/ads/:id", authMiddleware, AdController.delete);
+router.delete("/ads/:id", 
+// authMiddleware, 
+AdController.delete);
 
 router.get("/ads/search/:searchPhrase", AdController.searchAds);
 

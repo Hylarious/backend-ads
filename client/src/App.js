@@ -10,8 +10,8 @@ import Ad from "./components/pages/Ad/Ad";
 import AddAd from "./components/pages/AddAd/AddAd";
 import EditAd from "./components/pages/EditAd/EditAd";
 import DeleteAd from "./components/pages/DeleteAd/DeleteAd";
-import Search from "./components/pages/Search/Search";
 import NotFound from "./components/pages/NotFound/NotFound";
+import SearchResults from "./components/pages/SearchResults/SearchResults";
 
 
 
@@ -27,7 +27,7 @@ function App() {
         <Route path="/ad/add" element={<AddAd/>} />
         <Route path="/ad/edit/:id" element={<EditAd />} />
         <Route path="/ad/delete/:id" element={<DeleteAd />} />
-        <Route path="/search/:searchPhrase" element={<Search />} />
+        <Route path="/search/:searchPhrase" element={<SearchResults />} />
         <Route path="/register" element={<Register />} />
         <Route path="/login" element={<Login/>} />
         {/* <Route path="/logout" element={<Home />} /> */}

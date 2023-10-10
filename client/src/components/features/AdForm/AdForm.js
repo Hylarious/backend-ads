@@ -22,8 +22,8 @@ const AdForm = (props) => {
   const handleSubmit = () => {
     if (title && content && price && loc && adDate) {
       // e.preventDefault();
-      console.log({ title, content, price, loc, adDate, photo });
-      props.action({ title, content, price, loc, adDate, photo });
+      console.log({ title, content, price, loc,  adDate, photo });
+      props.action({ title, content, price, loc, date:adDate, photo });
     }
   };
 

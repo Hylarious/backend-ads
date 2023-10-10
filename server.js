@@ -53,6 +53,7 @@ app.use(
     cookie: {
       expires: 1000 * 60 *60 * 24,
       secure: process.env.NODE_ENV == "production",
+      domain: 'localhost:3000'
     },
   })
 );

@@ -18,6 +18,7 @@ const ERROR_REQUEST = createActionName("ERROR_REQUEST");
 
 export const LOAD_ADS = createActionName("LOAD_ADS");
 export const ADD_AD = createActionName("ADD_AD");
+export const EDIT_AD = createActionName("EDIT_AD");
 
 export const startRequest = (payload) => ({ payload, type: START_REQUEST });
 export const endRequest = (payload) => ({ payload, type: END_REQUEST });
@@ -25,6 +26,7 @@ export const errorRequest = (payload) => ({ payload, type: ERROR_REQUEST });
 
 export const loadAds = (payload) => ({ payload, type: LOAD_ADS });
 export const addAd = (payload) => ({ payload, type: ADD_AD });
+export const editAd = (payload) => ({ payload, type: EDIT_AD });
 
 // THUNKS
 
@@ -46,13 +48,33 @@ export const addAdRequest = (data) => {
   return async (dispatch) => {
     dispatch(startRequest({ name: ADD_AD }));
     try {
+      console.log(data)
       let res = await axios.post(`${API_URL}/ads`, data, {
         headers: {
           "Content-Type": "multipart/form-data",
         },
       });
       dispatch(addAd(res.data));
-      dispatch(endRequest({name: ADD_AD}))
+      dispatch(loadAdsRequest())
+      dispatch(endRequest({ name: ADD_AD }));
+    } catch (e) {
+      dispatch(errorRequest({ name: ADD_AD, error: e.message }));
+    }
+  };
+};
+
+export const editAdRequest = (data, id) => {
+  return async (dispatch) => {
+    dispatch(startRequest({ name: EDIT_AD }));
+    try {
+      let res = await axios.put(`${API_URL}/ads/${id}`, data, {
+        headers: {
+          "Content-Type": "multipart/form-data",
+        },
+      });
+      dispatch(editAd(res.data));
+      dispatch(loadAdsRequest())
+      dispatch(endRequest({ name: EDIT_AD }));
     } catch (e) {
       dispatch(errorRequest({ name: ADD_AD, error: e.message }));
     }
@@ -66,11 +88,16 @@ const adsReducer = (statePart = initialState, action = {}) => {
         ...statePart,
         data: [...action.payload],
       };
-    case ADD_AD: 
+    case ADD_AD:
+      return {
+        ...statePart,
+        data: [...statePart.data, action.payload],
+      };
+    case EDIT_AD:
       return {
         ...statePart, 
-        data: [...statePart.data, action.payload]
-      }
+        data: statePart.data.map(ad => (ad.id === action.payload._id ? {...ad, ...action.payload} : ad ))
+      };
     case START_REQUEST:
       return {
         ...statePart,

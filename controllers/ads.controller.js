@@ -1,4 +1,5 @@
 const Ad = require("../models/ad.model");
+const User = require("../models/user.model")
 const getImageFileType = require("../utils/getImageFileType");
 const fs = require("fs");
 
@@ -24,6 +25,8 @@ exports.addAd = async (req, res) => {
   try {
     const { title, content, date, price, loc, user } = req.body;
     const fileType = req.file ? await getImageFileType(req.file) : "unknown";
+    const userId = await User.findOne({login: user})
+    console.log(userId)
     if (
       title &&
       content &&
@@ -34,6 +37,8 @@ exports.addAd = async (req, res) => {
       req.file &&
       ["image/png", "image/jpeg", "image/jpg", "image/gif"].includes(fileType)
     ) {
+      
+  
       const newAd = new Ad({
         title,
         content,
@@ -41,7 +46,7 @@ exports.addAd = async (req, res) => {
         photo: req.file.filename,
         price,
         loc,
-        user,
+        user: userId._id,
       });
       await newAd.save();
       res.json(newAd);
@@ -58,6 +63,7 @@ exports.editAd = async (req, res) => {
   try {
     const { title, content, date, price, loc, user } = req.body;
     const fileType = req.file ? await getImageFileType(req.file) : "unknown";
+    const userId = await User.findOne({login: user})
     if (title && content && date && price && loc && user) {
       const ad = await Ad.findById(req.params.id);
       if (ad) {
@@ -75,7 +81,7 @@ exports.editAd = async (req, res) => {
                 photo: req.file.filename,
                 price,
                 loc,
-                user,
+                user: userId._id,
               },
             }
           );
@@ -85,7 +91,7 @@ exports.editAd = async (req, res) => {
         } else {
           await Ad.updateOne(
             { _id: req.params.id },
-            { $set: { title, content, date, price, loc, user } }
+            { $set: { title, content, date, price, loc, user: userId._id, } }
           );
           const newAd = await Ad.findById(req.params.id);
           res.json(newAd);
