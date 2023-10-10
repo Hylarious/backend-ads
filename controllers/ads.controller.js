@@ -114,6 +114,7 @@ exports.editAd = async (req, res) => {
 exports.delete = async (req, res) => {
   try {
     const ad = await Ad.findById(req.params.id);
+    // console.log(ad)
     if (ad) {
       ad.remove();
       res.json(ad);
