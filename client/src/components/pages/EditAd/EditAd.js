@@ -11,27 +11,28 @@ const EditAd = () => {
   const { id } = useParams();
   const adData = useSelector((state) => getAdById(state, id));
 
-  
-  const user = useSelector(state => checkIfLoggedIn(state))
-  
-const handleEdit = data => {
-  dispatch(editAdRequest({...data, user: user.login}, id));
-  navigate(`/ad/${id}`)
-} 
+  const user = useSelector((state) => checkIfLoggedIn(state));
 
-  console.log(adData);
-  if (!user) return <Navigate to='/'/>
-  else return (
-    <div>
-      {adData === undefined ? (
-        <Spinner key="spinner" animation="border" role="status">
-          <span className="visually-hidden">Loading...</span>
-        </Spinner>
-      ) : (
-        <AdForm action={handleEdit}{...adData}>Edit your ad!</AdForm>
-      )}
-    </div>
-  );
+  const handleEdit = (data) => {
+    dispatch(editAdRequest({ ...data, user: user.login }, id));
+    navigate(`/ad/${id}`);
+  };
+
+  if (!user) return <Navigate to="/" />;
+  else
+    return (
+      <div>
+        {adData === undefined ? (
+          <Spinner key="spinner" animation="border" role="status">
+            <span className="visually-hidden">Loading...</span>
+          </Spinner>
+        ) : (
+          <AdForm action={handleEdit} {...adData}>
+            Edit your ad!
+          </AdForm>
+        )}
+      </div>
+    );
 };
 
 export default EditAd;

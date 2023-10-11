@@ -17,25 +17,21 @@ const SearchResults = () => {
       ad.title.toLowerCase().includes(searchPhrase.toLowerCase())
     );
     setSearchAds(filteredAds);
-    setStatus('success')
-    if(searchAds.length = 0) {
-        setStatus('noMatch')
+    setStatus("success");
+    if ((searchAds.length = 0)) {
+      setStatus("noMatch");
     }
   }, [ads, searchPhrase]);
 
   return (
     <div>
-        <Search/>
+      <Search />
       {status === "loading" && (
         <Spinner key="spinner" animation="border" role="status">
           <span className="visually-hidden">Loading...</span>
         </Spinner>
       )}
-      { searchAds ? (
-        <AdsList ads={searchAds} />
-      ) : (
-        <div>Halo</div>
-      )}
+      {searchAds ? <AdsList ads={searchAds} /> : <div>Halo</div>}
     </div>
   );
 };

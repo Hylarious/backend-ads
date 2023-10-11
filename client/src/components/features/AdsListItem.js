@@ -4,8 +4,8 @@ import { IMGS_URL } from "../../config";
 
 const AdsListItem = (props) => {
   return (
-    <Card   className=" col-sm-4 text-center">
-      <Card.Img variant="top" src={`${IMGS_URL}/${props.photo}`}/>
+    <Card className=" col-sm-4 text-center">
+      <Card.Img variant="top" src={`${IMGS_URL}/${props.photo}`} />
       <Card.Body>
         <Card.Title>{props.title}</Card.Title>
         <Card.Text>{props.loc}</Card.Text>

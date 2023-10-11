@@ -12,12 +12,12 @@ const Login = () => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    console.log(JSON.stringify({ login, password }))
     const options = {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
       },
+      credentials: "include",
       body: JSON.stringify({ login, password }),
     };
     setStatus("loading");

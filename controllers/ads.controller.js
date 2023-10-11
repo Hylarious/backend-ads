@@ -1,5 +1,5 @@
 const Ad = require("../models/ad.model");
-const User = require("../models/user.model")
+const User = require("../models/user.model");
 const getImageFileType = require("../utils/getImageFileType");
 const fs = require("fs");
 
@@ -25,8 +25,7 @@ exports.addAd = async (req, res) => {
   try {
     const { title, content, date, price, loc, user } = req.body;
     const fileType = req.file ? await getImageFileType(req.file) : "unknown";
-    const userId = await User.findOne({login: user})
-    console.log(userId)
+    const userId = await User.findOne({ login: user });
     if (
       title &&
       content &&
@@ -37,8 +36,6 @@ exports.addAd = async (req, res) => {
       req.file &&
       ["image/png", "image/jpeg", "image/jpg", "image/gif"].includes(fileType)
     ) {
-      
-  
       const newAd = new Ad({
         title,
         content,
@@ -63,7 +60,7 @@ exports.editAd = async (req, res) => {
   try {
     const { title, content, date, price, loc, user } = req.body;
     const fileType = req.file ? await getImageFileType(req.file) : "unknown";
-    const userId = await User.findOne({login: user})
+    const userId = await User.findOne({ login: user });
     if (title && content && date && price && loc && user) {
       const ad = await Ad.findById(req.params.id);
       if (ad) {
@@ -91,7 +88,7 @@ exports.editAd = async (req, res) => {
         } else {
           await Ad.updateOne(
             { _id: req.params.id },
-            { $set: { title, content, date, price, loc, user: userId._id, } }
+            { $set: { title, content, date, price, loc, user: userId._id } }
           );
           const newAd = await Ad.findById(req.params.id);
           res.json(newAd);
@@ -114,7 +111,6 @@ exports.editAd = async (req, res) => {
 exports.delete = async (req, res) => {
   try {
     const ad = await Ad.findById(req.params.id);
-    // console.log(ad)
     if (ad) {
       ad.remove();
       res.json(ad);
@@ -127,7 +123,6 @@ exports.delete = async (req, res) => {
 exports.searchAds = async (req, res) => {
   try {
     const regex = new RegExp(`.*${req.params.searchPhrase}.*`, "i");
-    console.log(req.params.searchPhrase, regex);
     res.json(await Ad.find({ title: regex }));
   } catch (err) {
     res.status(500).send({ message: err });

@@ -50,7 +50,6 @@ export const addAdRequest = (data) => {
   return async (dispatch) => {
     dispatch(startRequest({ name: ADD_AD }));
     try {
-      console.log(data);
       let res = await axios.post(`${API_URL}/ads`, data, {
         headers: {
           "Content-Type": "multipart/form-data",
@@ -115,11 +114,11 @@ const adsReducer = (statePart = initialState, action = {}) => {
           ad.id === action.payload._id ? { ...ad, ...action.payload } : ad
         ),
       };
-      case DELETE_AD: 
+    case DELETE_AD:
       return {
-        ...statePart, 
-        data: statePart.data.filter(ad => ad._id !== action.payload)
-      }
+        ...statePart,
+        data: statePart.data.filter((ad) => ad._id !== action.payload),
+      };
     case START_REQUEST:
       return {
         ...statePart,

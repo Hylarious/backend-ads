@@ -10,7 +10,6 @@ const Ad = () => {
   const { id } = useParams();
   const adData = useSelector((state) => getAdById(state, id));
   const user = useSelector((state) => checkIfLoggedIn(state));
-  // console.log(adData.user.login, user)
   return (
     <div>
       {adData === undefined ? (
@@ -41,7 +40,7 @@ const Ad = () => {
             <p>Location: {adData.loc}</p>
             <p>Date: {adData.date}</p>
           </div>
-          {(user && user.login === adData.user.login) && (
+          {user && user.login === adData.user.login && (
             <div>
               <Button
                 className="ms-auto"

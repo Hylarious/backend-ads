@@ -21,14 +21,12 @@ const AdForm = (props) => {
 
   const handleSubmit = () => {
     if (title && content && price && loc && adDate) {
-      // e.preventDefault();
-      console.log({ title, content, price, loc,  adDate, photo });
-      props.action({ title, content, price, loc, date:adDate, photo });
+      props.action({ title, content, price, loc, date: adDate, photo });
     }
   };
 
   return (
-    <Form  className="col-12 col-sm-6 mx-auto" onSubmit={validate(handleSubmit)}>
+    <Form className="col-12 col-sm-6 mx-auto" onSubmit={validate(handleSubmit)}>
       <h2>{props.children}</h2>
       <Form.Group className="mb-3" controlId="formTitle">
         <Form.Label>Title:</Form.Label>
@@ -78,7 +76,7 @@ const AdForm = (props) => {
           onChange={(e) => {
             setPrice(e.target.value);
           }}
-           placeholder="Enter price"
+          placeholder="Enter price"
         />
         {errors.price && (
           <small className="d-block form-text text-danger mt-2">
@@ -89,7 +87,7 @@ const AdForm = (props) => {
       <Form.Group className="mb-3" controlId="formLoc">
         <Form.Label>Location:</Form.Label>
         <Form.Control
-        {...register("loc", { require: true })}
+          {...register("loc", { require: true })}
           type="text"
           value={loc}
           onChange={(e) => {
@@ -97,7 +95,7 @@ const AdForm = (props) => {
           }}
           placeholder="Enter location"
         />
-          {errors.location && (
+        {errors.location && (
           <small className="d-block form-text text-danger mt-2">
             Enter location
           </small>
@@ -107,13 +105,12 @@ const AdForm = (props) => {
         <Form.Label>Date:</Form.Label>
         <br />
         <DatePicker
-        {...register("date", { require: true })}
+          {...register("date", { require: true })}
           dateFormat="dd/MM/yyyy"
           maxDate={new Date()}
           selected={adDate}
           onChange={(date) => {
             setAdDate(date);
-            console.log(date);
           }}
         />
         {errors.location && (
@@ -133,7 +130,7 @@ const AdForm = (props) => {
           }}
         />
       </Form.Group>
-      <Button  variant="primary" type="submit">
+      <Button variant="primary" type="submit">
         Submit
       </Button>
     </Form>

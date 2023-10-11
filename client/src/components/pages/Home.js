@@ -6,7 +6,6 @@ import Search from "../features/Search/Search";
 
 const Home = () => {
   const ads = useSelector(getAllAds);
-  console.log(ads);
   return (
     <Row>
       {ads.length === 0 ? (

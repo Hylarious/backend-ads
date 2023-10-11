@@ -19,17 +19,20 @@ const server = app.listen(process.env.PORT || 8000, () => {
 
 const io = socket(server);
 
-mongoose.connect(
+const connectToDb = () => {mongoose.connect(
   `mongodb+srv://karolinahyla1:${process.env.DB_PASSWORD}@cluster0.c8sesoa.mongodb.net/?retryWrites=true&w=majority`,
   { useNewUrlParser: true, useUnifiedTopology: true }
 );
 const db = mongoose.connection;
-
 db.once("open", () => {
   console.log("Connected to database");
 });
 
 db.on("error", (err) => console.log("Error" + err));
+}
+
+connectToDb()
+
 
 app.use(helmet());
 
@@ -51,9 +54,8 @@ app.use(
     resave: false,
     saveUninitialized: false,
     cookie: {
-      expires: 1000 * 60 *60 * 24,
+      // expires: 1000 * 60 *60 * 24,
       secure: process.env.NODE_ENV == "production",
-      domain: 'localhost:3000'
     },
   })
 );
@@ -62,14 +64,16 @@ app.use((req, res, next) => {
   (req.io = io), next();
 });
 
-app.use("/api/auth", authRoutes);
-app.use("/api", adsRoutes);
+
 app.use(express.static(path.join(__dirname, "client/build")));
 app.use(express.static(path.join(__dirname, "/public")));
 
-// app.get("*", (req, res) => {
-//   res.sendFile(path.join(__dirname, "/client/build/index.html"));
-// });
+app.use("/api/auth", authRoutes);
+app.use("/api", adsRoutes);
+
+app.get("*", (req, res) => {
+  res.sendFile(path.join(__dirname, "/client/build/index.html"));
+});
 
 app.use((req, res) => {
   res.status(404).json({ message: "Not found..." });
